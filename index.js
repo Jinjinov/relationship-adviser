@@ -13,12 +13,12 @@ const router = new VueRouter({
 })
 
 // this is the Vue.js app
-var app = new Vue({
+new Vue({
     el: '#app',
     router,
     watch:{
       '$route.params': function (newVal, oldVal){
-        var found = false;
+        //var found = false;
       },
       '$route.params.question': function(newVal, oldVal){
         this.question = newVal;
@@ -221,7 +221,7 @@ var app = new Vue({
               found = false;
               break;
             }
-            var answerCategories = answer[category];
+            //var answerCategories = answer[category];
             if(!answer[category].includes(questionCategories[category])) {
               found = false;
               break;
@@ -334,27 +334,27 @@ var app = new Vue({
       }
     },
     beforeCreate(){
-      var found = false; // #1 , vuepouch -> #2
+      //var found = false; // #1 , vuepouch -> #2
     },
     created(){
-      var found = false; // #3
+      //var found = false; // #3
     },
     beforeMount(){
-      var found = false; // #4 , computed -> #5
+      //var found = false; // #4 , computed -> #5
     },
     mounted(){ // template parsed
-      var found = false; // #6 , vuepouch -> #7 initDB - then
+      //var found = false; // #6 , vuepouch -> #7 initDB - then
 
       if(this.categoriesList == null){
         this.$forceUpdate();
       }
     },
     beforeUpdate(){
-      var found = false; // #8
+      //var found = false; // #8
 
       this.prepareSelectList();
     },
     updated(){ // v-for resolved
-      var found = false; // #9
+      //var found = false; // #9
     }
   });
