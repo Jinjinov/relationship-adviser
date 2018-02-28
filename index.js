@@ -171,7 +171,13 @@ var app = new Vue({
         if(!categoriesMap || !answerMap){
           return;
         }
-        var categories = categoriesMap[Object.keys(categoriesMap)[0]];
+        var keys = Object.keys(categoriesMap);
+        if(keys.length != 1) {
+          alert("there must be exactly 1 Categories object")
+        }
+        var firstKey = keys[0];
+        var categories = categoriesMap[firstKey];
+        //var categories = categoriesMap[Object.keys(categoriesMap)[0]];
 
         var questionCategories = new Object();
         while(this.question.length > 0) {
