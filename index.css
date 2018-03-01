@@ -3,7 +3,7 @@ body {
 }
 
 input {
-    width: 100%;
+    width: calc(100% - 4px);
     margin: 2px;
     padding: 2px;
     box-sizing: border-box;

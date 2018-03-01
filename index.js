@@ -179,6 +179,10 @@ new Vue({
         var categories = categoriesMap[firstKey];
         //var categories = categoriesMap[Object.keys(categoriesMap)[0]];
 
+        if(!this.question){
+          return;
+        }
+        
         var questionCategories = new Object();
         while(this.question.length > 0) {
           for(var categoryValue in categories.map) {
@@ -237,8 +241,7 @@ new Vue({
           this.answer = "No answer found!";
         }
       },
-      // TODO::
-      // - alternative to: this.$forceUpdate();
+      // TODO:: alternative to: this.$forceUpdate(); - this.$nextTick(() => {})
       prepareSelectList(){
         /*
         if(this.categoriesList == null){
@@ -268,8 +271,7 @@ new Vue({
           }
         }
       },
-      // TODO::
-      // fix includes() bug - string "fe-male" includes "male"
+      // TODO:: fix includes() bug - string "fe-male" includes "male"
       updateSelectList(){
         // new list of answers - include answers that contain selected categories and seleceted category values
         var remainingAnswerList = [];

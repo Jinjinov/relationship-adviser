@@ -80,13 +80,16 @@
       <br/>
       -->
       <!-- Q & A -->
-      <input v-model="question">
-      <br/>
-      <p>{{ question }}</p>
-      <button v-on:click="parseQuestion()">parseQuestion</button>
-      <br/>
-      <p>Answer: {{answer}}</p>
-      <br/>
+      <div>
+        <input v-model="question">
+        <br/>
+        <p>Question:</p>
+        <p>{{ question }}</p>
+        <button v-on:click="parseQuestion()">Parse Question</button>
+        <br/>
+        <p>Answer:</p>
+        <p>{{answer}}</p>
+      </div>
       <!-- list of lists 
       <div v-for="select in selectList" v-if="select.selected != 'C'">
         <select v-model="select.selected">
@@ -102,7 +105,8 @@
         <br/>
       </div>
       -->
-      <button v-on:click="prepareSelectList()">prepareSelectList</button>
+      <br/>
+      <button v-on:click="prepareSelectList()">Fill select options from all categories</button>
       <br/>
       <br/>
       <!-- list of lists -->
@@ -120,10 +124,11 @@
         <span>Selected: {{ category.selected }}</span>      
         <br/>
       </div>
-      <button v-on:click="updateSelectList()">updateSelectList</button>
+      <br/>
+      <button v-on:click="updateSelectList()">Update select options from remaining answers</button>
       <br/>
       <br/>
-      <span>route: {{ this.$route.params }}</span>
+      <span>URL parameter: {{ this.$route.params }}</span>
       <router-view></router-view>
     </div>
 
