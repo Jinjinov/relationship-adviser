@@ -36,32 +36,6 @@ new Vue({
       answersSource: answers,
       // categories.js
       categoriesSource: categories,
-      // vue guide:
-      selected: 'A',
-      options: [
-        { text: 'One', value: 'A' },
-        { text: 'Two', value: 'B' },
-        { text: 'Three', value: 'C' }
-      ],
-      // list of lists:
-      selectList: [
-        {
-          selected: 'A',
-          options: [
-            { text: 'One', value: 'A' },
-            { text: 'Two', value: 'B' },
-            { text: 'Three', value: 'C' }
-          ]
-        },
-        {
-          selected: 'A',
-          options: [
-            { text: 'One', value: 'A' },
-            { text: 'Two', value: 'B' },
-            { text: 'Three', value: 'C' }
-          ]
-        }
-      ],
       categoriesList: null
     },
     //-------------------------------------------------------------------------

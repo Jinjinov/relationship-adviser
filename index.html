@@ -5,14 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
 
-    <!-- mobile styling -->
     <meta name="theme-color" content="#448AFF">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#448AFF">
     <meta name="apple-mobile-web-app-title" content="Relationship advisor">
 
-    <!-- PWA manifest -->
     <link rel="manifest" href="manifest.json">
 
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
@@ -37,7 +35,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/2.3.7/mini-sucroa.min.css">
     -->
 
-    <!-- our styles -->
     <link href="index.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
   </head>
@@ -68,18 +65,7 @@
       <button v-on:click="parseAnswers()">parseAnswers</button>
       <br/>
       -->
-      <!-- vue guide 
-      <select v-model="selected">
-        <option v-for="option in options" v-bind:value="option.value">
-          {{ option.text }}
-        </option>
-      </select>
-      <br/>
-      <span>Selected: {{ selected }}</span>      
-      <br/>
-      <br/>
-      -->
-      <!-- Q & A -->
+
       <div>
         <input v-model="question">
         <br/>
@@ -90,30 +76,11 @@
         <p>Answer:</p>
         <p>{{answer}}</p>
       </div>
-      <!-- list of lists 
-      <div v-for="select in selectList" v-if="select.selected != 'C'">
-        <select v-model="select.selected">
-          <template v-for="option in select.options">
-            <option v-if="option.value != 'B'" v-bind:value="option.value">
-              {{ option.text }}
-            </option>
-          </template>
-        </select>
-        <br/>
-        <span>Selected: {{ select.selected }}</span>      
-        <br/>
-        <br/>
-      </div>
-      -->
       <br/>
       <button v-on:click="prepareSelectList()">Fill select options from all categories</button>
       <br/>
       <br/>
-      <!-- list of lists -->
       <div v-for="category in categoriesList" v-if="category.isAvailable">
-        <!--
-        <span>{{ category.category }}</span>
-        -->
         <select v-model="category.selected" required>
           <option :value="null" disabled selected>{{ category.category }}</option>
           <template v-for="option in category.options">
@@ -122,11 +89,6 @@
             </option>
           </template>
         </select>
-        <!--
-        <br/>
-        <span>Selected: {{ category.selected }}</span>      
-        <br/>
-        -->
       </div>
       <br/>
       <button v-on:click="updateSelectList()">Update select options from remaining answers</button>
@@ -136,7 +98,6 @@
       <router-view></router-view>
     </div>
 
-    <!-- PouchDB - in-browser database -->
     <script src="https://cdn.jsdelivr.net/gh/pouchdb/pouchdb@6.3.4/dist/pouchdb.min.js"></script>
     <!-- script src="https://cdn.jsdelivr.net/gh/pouchdb/pouchdb@6.3.4/dist/pouchdb.find.min.js"></script -->
 
@@ -152,14 +113,12 @@
       //    // error occurred
       //  })
     </script>
-    <!-- Vue.js - framework that handles DOM/Model interaction -->
-    <!-- script src="https://unpkg.com/vue@2.5.2/dist/vue.js"></script -->
+
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 
     <script src="vuepouch.js"></script>
 
-    <!-- our code -->
     <script src="answers.js"></script>
     <script src="categories.js"></script>
     <script src="index.js"></script>
