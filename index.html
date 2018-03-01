@@ -111,18 +111,22 @@
       <br/>
       <!-- list of lists -->
       <div v-for="category in categoriesList" v-if="category.isAvailable">
-        <span>Category: {{ category.category }}</span>
-        <br/>
-        <select v-model="category.selected">
+        <!--
+        <span>{{ category.category }}</span>
+        -->
+        <select v-model="category.selected" required>
+          <option :value="null" disabled selected>{{ category.category }}</option>
           <template v-for="option in category.options">
             <option v-if="option.isAvailable" v-bind:value="option.option">
               {{ option.option }}
             </option>
           </template>
         </select>
+        <!--
         <br/>
         <span>Selected: {{ category.selected }}</span>      
         <br/>
+        -->
       </div>
       <br/>
       <button v-on:click="updateSelectList()">Update select options from remaining answers</button>

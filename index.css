@@ -2,6 +2,16 @@ body {
     font-family:'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
 
+select:required:invalid {
+    color: gray;
+}
+option[value=""][disabled] {
+    display: none;
+}
+option {
+    color: black;
+}
+
 input {
     width: calc(100% - 4px);
     margin: 2px;
