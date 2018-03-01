@@ -1,7 +1,6 @@
 body {
     font-family:'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
-
 select:required:invalid {
     color: gray;
 }
@@ -11,50 +10,42 @@ option[value=""][disabled] {
 option {
     color: black;
 }
-
 input {
     width: calc(100% - 4px);
     margin: 2px;
     padding: 2px;
     box-sizing: border-box;
 }
-
 textarea {
     width: 100px;
     height: 100px;
     margin: 2px;
     padding: 2px;
     vertical-align: middle;
-
     resize: none;
 }
-
 button {
     margin: 2px;
     padding: 2px;
 }
-
 ul {
     margin: 2px;
     padding: 2px;
     border-style: solid;
     border-width: 1px;
 }
-
 li {
     margin: 2px;
     padding: 2px;
     border-style: solid;
     border-width: 1px;
 }
-
 div {
     margin: 2px;
     padding: 2px;
     border-style: solid;
     border-width: 1px;
 }
-
 p {
     margin: 2px;
     padding: 2px;
