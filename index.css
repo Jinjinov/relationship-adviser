@@ -56,7 +56,6 @@ div {
 }
 
 p {
-    display: inline-block;
     margin: 2px;
     padding: 2px;
     border-style: solid;

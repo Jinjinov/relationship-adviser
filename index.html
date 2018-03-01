@@ -44,42 +44,30 @@
     <div id="app">
       <!--
       <h1>categoryKeys</h1>
-      <br/>
       <ul>
         <li v-for="category in categoryKeys">{{category}}</li>
       </ul>
-      <br/>
       <h1>categoryValues</h1>
-      <br/>
       <ul>
         <li v-for="category in categoryValues">{{category}}</li>
       </ul>
-      <br/>
       <h1>answers</h1>
-      <br/>
       <ul>
         <li v-for="answer in answers">{{answer}}</li>
       </ul>
-      <br/>
       <button v-on:click="parseCategories()">parseCategories</button>
       <button v-on:click="parseAnswers()">parseAnswers</button>
-      <br/>
       -->
 
       <div>
         <input v-model="question">
-        <br/>
         <p>Question:</p>
         <p>{{ question }}</p>
         <button v-on:click="parseQuestion()">Parse Question</button>
-        <br/>
         <p>Answer:</p>
         <p>{{answer}}</p>
       </div>
-      <br/>
       <button v-on:click="prepareSelectList()">Fill select options from all categories</button>
-      <br/>
-      <br/>
       <div v-for="category in categoriesList" v-if="category.isAvailable">
         <select v-model="category.selected" required>
           <option :value="null" disabled selected>{{ category.category }}</option>
@@ -90,11 +78,8 @@
           </template>
         </select>
       </div>
-      <br/>
       <button v-on:click="updateSelectList()">Update select options from remaining answers</button>
-      <br/>
-      <br/>
-      <span>URL parameter: {{ this.$route.params }}</span>
+      <p>URL parameter: {{ this.$route.params }}</p>
       <router-view></router-view>
     </div>
 
