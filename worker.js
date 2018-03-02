@@ -3,12 +3,14 @@
 
 var cachename = 'relationship-advisor-vuejs-pouchdb-0.0.1'
 var urlstocache = [
+  'index.css',
   'index.html',
   'index.js',
-  'index.css',
-  'https://cdn.jsdelivr.net/gh/pouchdb/pouchdb@6.3.4/dist/pouchdb.min.js',
-  //'https://cdn.jsdelivr.net/gh/pouchdb/pouchdb@6.3.4/dist/pouchdb.find.min.js',
-  'https://unpkg.com/vue/dist/vue.js'
+  'vuepouch.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/pouchdb/6.4.3/pouchdb.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.1/vue-router.min.js'
 ];
 
 // install/cache page assets
