@@ -58,7 +58,9 @@
       <p>URL parameter: {{ this.$route.params }}</p>
       <router-view></router-view>
     </div>
+
     <noscript>Sorry, your browser does not support JavaScript!</noscript>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pouchdb/6.4.3/pouchdb.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.1/vue-router.min.js"></script>
@@ -67,18 +69,18 @@
     <script src="categories.js"></script>
     <script src="index.js"></script>
 	  <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('worker.js').then(function(registration) {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker.register("worker.js").then(function(registration) {
+            console.log("ServiceWorker registration successful with scope: ", registration.scope);
           }, function(err) {
-            console.log('ServiceWorker registration failed: ', err);
+            console.log("ServiceWorker registration failed: ", err);
           });
         });
       }
     </script>
     <script>
-      //new PouchDB('relationshipadvisor').destroy().then(function () {
+      //new PouchDB("relationshipadvisor").destroy().then(function () {
       //    // database destroyed
       //  }).catch(function (err) {
       //    // error occurred
