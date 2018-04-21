@@ -12,6 +12,18 @@ const router = new VueRouter({
   ]
 })
 
+// mode: 'history' - Apache -> Nginx
+
+// https://router.vuejs.org/en/essentials/dynamic-matching.html
+// https://router.vuejs.org/en/advanced/data-fetching.html
+
+// https://github.com/ibm-watson-data-lab/shopping-list-vuejs-pouchdb
+// https://pouchdb.com/2016/04/28/prebuilt-databases-with-pouchdb.html
+
+// https://vuejsfeed.com/blog/build-a-reusable-autocomplete-component-with-vue-2-1
+// http://taha-sh.com/blog/building-an-awesome-reusable-autocomplete-input-component-in-vue-21-part-one
+// http://taha-sh.com/blog/building-an-awesome-reusable-autocomplete-input-component-in-vue-21-part-two
+
 // this is the Vue.js app
 new Vue({
     el: '#app',
