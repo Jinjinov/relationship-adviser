@@ -1,7 +1,7 @@
 
-const Question = {
-  template: '<div>Question {{ $route.params.question }}</div>'
-}
+//const Question = {
+//  template: '<div>Question {{ $route.params.question }}</div>'
+//}
 
 const router = new VueRouter({
   base: '/RelationshipAdvisor/',
@@ -29,10 +29,7 @@ new Vue({
     el: '#app',
     router,
     watch:{
-      '$route.params': function (newVal, oldVal){
-        //var found = false;
-      },
-      '$route.params.question': function(newVal, oldVal){
+      '$route.params.question': function(newVal){
         this.question = newVal;
         this.parseQuestion();
       }
@@ -119,19 +116,19 @@ new Vue({
       parseCategories() {
         var categories = new Object();
         categories.doctype = 'categories';
-        categories.categories = [];
-        categories.map = new Object();
+        categories.categoryNameList = [];
+        categories.optionToNameMap = new Object();
         for(var categoryKey in this.categoriesSource) {
-          categories.categories.push(categoryKey);
+          categories.categoryNameList.push(categoryKey);
 
           var category = new Object();
           category.doctype = 'category';
-          category.category = categoryKey;
-          category.list = this.categoriesSource[categoryKey];
+          category.categoryName = categoryKey;
+          category.optionList = this.categoriesSource[categoryKey];
           this.$pouchdbRefs.relationshipadvisor.put('category', category);
 
           for(var categoryValueIndex in this.categoriesSource[categoryKey]) {
-            categories.map[this.categoriesSource[categoryKey][categoryValueIndex]] = categoryKey;
+            categories.optionToNameMap[this.categoriesSource[categoryKey][categoryValueIndex]] = categoryKey;
           }
         }
         this.$pouchdbRefs.relationshipadvisor.put('categories', categories);
@@ -140,10 +137,10 @@ new Vue({
       parseAnswers() {
         for(var answerIndex in this.answersSource) {
           var answer = this.answersSource[answerIndex];
-          answer.categories = [];
+          answer.categoryNameList = [];
           for(var key in answer) {
-            if(key != 'answer' && key != 'categories' && key != 'doctype') {
-              answer.categories.push(key);
+            if(key != 'answer' && key != 'categoryNameList' && key != 'doctype') {
+              answer.categoryNameList.push(key);
             }
           }
           answer.doctype = 'answer';
@@ -171,13 +168,13 @@ new Vue({
         
         var questionCategories = new Object();
         while(this.question.length > 0) {
-          for(var categoryValue in categories.map) {
-            if(this.question.startsWith(categoryValue)) {
-              questionCategories[categories.map[categoryValue]] = categoryValue;
-              if(this.question.length > categoryValue.length) {
-                this.question = this.question.substring(categoryValue.length + 1);
+          for(var categoryOption in categories.optionToNameMap) {
+            if(this.question.startsWith(categoryOption)) {
+              questionCategories[categories.optionToNameMap[categoryOption]] = categoryOption;
+              if(this.question.length > categoryOption.length) {
+                this.question = this.question.substring(categoryOption.length + 1);
               }
-              if(this.question.length == categoryValue.length) {
+              if(this.question.length == categoryOption.length) {
                 this.question = '';
               }
               break;
@@ -193,7 +190,7 @@ new Vue({
           /*
           // is there an answer that contains all parts of the question
           for(var category in questionCategories) {
-            if(!answer.categories.includes(category)) {
+            if(!answer.categoryNameList.includes(category)) {
               found = false;
               break;
             }
@@ -205,14 +202,14 @@ new Vue({
           /**/
 
           // is the question contained in all parts of any answer
-          for(var categoryIndex in answer.categories) {
-            var category = answer.categories[categoryIndex];
-            if(!questionCategories.hasOwnProperty(category)) {
+          for(var categoryIndex in answer.categoryNameList) {
+            var categoryName = answer.categoryNameList[categoryIndex];
+            if(!questionCategories.hasOwnProperty(categoryName)) {
               found = false;
               break;
             }
             //var answerCategories = answer[category];
-            if(!answer[category].includes(questionCategories[category])) {
+            if(!answer[categoryName].includes(questionCategories[categoryName])) {
               found = false;
               break;
             }
@@ -242,18 +239,31 @@ new Vue({
           this.categoriesList = {};
           for(var categoryKey in this.relationshipadvisor.category){
             var category = this.relationshipadvisor.category[categoryKey];
-            this.$set(this.categoriesList, category.category, category);
+            this.$set(this.categoriesList, category.categoryName, category);
             //category['isAvailable'] = true;
-            this.$set(this.categoriesList[category.category], 'isAvailable', true);
-            //category['selected'] = category.list[0];
-            //this.$set(this.categoriesList[category.category], 'selected', category.list[0]);
-            this.$set(this.categoriesList[category.category], 'selected', null);
-            this.$set(this.categoriesList[category.category], 'options', Object.create(null));
-            for(var idx in category.list){
-              //category.list[idx] = { option:category.list[idx], isAvailable:true };
-              //this.$set(this.categoriesList[category.category].list, idx, { option:category.list[idx], isAvailable:true });
-              this.$set(this.categoriesList[category.category].options, category.list[idx], { option:category.list[idx], isAvailable:true });
+            this.$set(this.categoriesList[category.categoryName], 'isAvailable', true);
+            //category['selectedOption'] = category.optionList[0];
+            //this.$set(this.categoriesList[category.categoryName], 'selectedOption', category.optionList[0]);
+            this.$set(this.categoriesList[category.categoryName], 'selectedOption', null);
+            this.$set(this.categoriesList[category.categoryName], 'optionMap', Object.create(null));
+            for(var idx in category.optionList){
+              //category.optionList[idx] = { optionName:category.optionList[idx], isAvailable:true };
+              //this.$set(this.categoriesList[category.categoryName].optionList, idx, { optionName:category.optionList[idx], isAvailable:true });
+              this.$set(this.categoriesList[category.categoryName].optionMap, category.optionList[idx], { optionName:category.optionList[idx], isAvailable:true });
             }
+          }
+        }
+      },
+      resetAvailable(){
+        // set all to "available:false"
+        for(var categoryIdx in this.categoriesList){
+          var category = this.categoriesList[categoryIdx];
+          category.isAvailable = false;
+          //for(var optionIdx in category.list){
+          //  category.list[optionIdx].isAvailable = false;
+          //}
+          for(var optionIdx in category.optionMap){
+            category.optionMap[optionIdx].isAvailable = false;
           }
         }
       },
@@ -267,12 +277,12 @@ new Vue({
           var include = true;
           for(var idx in this.categoriesList){
             var category = this.categoriesList[idx];
-            if(category.selected != null){
-              if(!answer.categories.includes(category.category)){
+            if(category.selectedOption != null){
+              if(!answer.categoryNameList.includes(category.categoryName)){
                 include = false;
                 break;
               }
-              if(!answer[category.category].includes(category.selected)){
+              if(!answer[category.categoryName].includes(category.selectedOption)){
                 include = false;
                 break;
               }
@@ -284,38 +294,31 @@ new Vue({
         }
         if(remainingAnswerList.length == 1){
           this.answer = remainingAnswerList[0].answer;
+          // TODO:: write all selected options to form the question
+          this.question = "";
           //return;
         }
-        // set all to "available:false"
-        for(var categoryIdx in this.categoriesList){
-          var category = this.categoriesList[categoryIdx];
-          category.isAvailable = false;
-          //for(var optionIdx in category.list){
-          //  category.list[optionIdx].isAvailable = false;
-          //}
-          for(var optionIdx in category.options){
-            category.options[optionIdx].isAvailable = false;
-          }
-        }
+        this.resetAvailable();
         // set "available:true" to category values that are included in any answer
         // set "available:true" to category if any of its values has "available:true"
-        for(var answerIdx in remainingAnswerList){
-          var answer = remainingAnswerList[answerIdx];
-          for(var categoryIdx in answer.categories){
-            var category = answer.categories[categoryIdx];
+        for(var remainingAnswerIdx in remainingAnswerList){
+          var remainingAnswer = remainingAnswerList[remainingAnswerIdx];
+          for(var categoryIdx in remainingAnswer.categoryNameList){
+            var categoryName = remainingAnswer.categoryNameList[categoryIdx];
             //this.categoriesList[categoryIdx].isAvailable = true;
-            this.categoriesList[category].isAvailable = true;
+            this.categoriesList[categoryName].isAvailable = true;
 
-            if(Array.isArray(answer[category])){
-              for(var optionIdx in answer[category]){
-                var option = answer[category][optionIdx];
+            var option = "";
+            if(Array.isArray(remainingAnswer[categoryName])){
+              for(var optionIdx in remainingAnswer[categoryName]){
+                option = remainingAnswer[categoryName][optionIdx];
                 //this.categoriesList[categoryIdx][optionIdx].isAvailable = true;
-                this.categoriesList[category].options[option].isAvailable = true;
+                this.categoriesList[categoryName].optionMap[option].isAvailable = true;
               }
             }
             else{
-              var option = answer[category];
-              this.categoriesList[category].options[option].isAvailable = true;
+              option = remainingAnswer[categoryName];
+              this.categoriesList[categoryName].optionMap[option].isAvailable = true;
             }
           }
         }

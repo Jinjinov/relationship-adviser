@@ -33,29 +33,30 @@
         <li v-for="answer in answers">{{answer}}</li>
       </ul>
       -->
-      <button v-on:click="parseCategories()">parseCategories</button>
-      <button v-on:click="parseAnswers()">parseAnswers</button>
+      <button v-on:click="parseCategories()">[DEBUG] import categories from js file to PouchDB</button>
+      <button v-on:click="parseAnswers()">[DEBUG] import answers from js file to PouchDB</button>
       <div>
+        <p>[DEBUG] URL Question Input:</p>
         <input v-model="question" aria-label="Question">
         <p>Question:</p>
         <p>{{ question }}</p>
-        <button v-on:click="parseQuestion()">Parse Question</button>
+        <button v-on:click="parseQuestion()">[DEBUG] Parse URL Question</button>
         <p>Answer:</p>
         <p>{{answer}}</p>
       </div>
-      <button v-on:click="prepareSelectList()">Fill select options from all categories</button>
+      <button v-on:click="prepareSelectList()">[DEBUG] Fill select options (vue categoriesList) from all categories (pouchdb category)</button>
       <div v-for="category in categoriesList" v-if="category.isAvailable">
-        <select v-model="category.selected" required>
-          <option :value="null" disabled selected>{{ category.category }}</option>
-          <template v-for="option in category.options">
-            <option v-if="option.isAvailable" v-bind:value="option.option">
-              {{ option.option }}
+        <select v-model="category.selectedOption" required>
+          <option :value="null" disabled selected>{{ category.categoryName }}</option>
+          <template v-for="option in category.optionMap">
+            <option v-if="option.isAvailable" v-bind:value="option.optionName">
+              {{ option.optionName }}
             </option>
           </template>
         </select>
       </div>
       <button v-on:click="updateSelectList()">Update select options from remaining answers</button>
-      <p>URL parameter: {{ this.$route.params }}</p>
+      <p>[DEBUG] URL parameter: {{ this.$route.params }}</p>
       <router-view></router-view>
     </div>
 
