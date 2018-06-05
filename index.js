@@ -38,8 +38,9 @@ new Vue({
     // data
     //-------------------------------------------------------------------------
     data: {
+      debug: false,
       path: window.location.pathname,
-      answer: 'Relationship Advisor',
+      answer: 'No answer yet!',
       question: 'single male with one male friend with no female friends shy hard to talk with girls talk to a girl',
       // answers.js
       answersSource: answers,
@@ -73,7 +74,7 @@ new Vue({
         var categoriesMap = this.relationshipadvisor.categories;
         if(categoriesMap){
           var value = categoriesMap[Object.keys(categoriesMap)[0]];
-          return value.categories;
+          return value.categoryNameList;
         }
         /*
         var keys = [];
@@ -91,7 +92,7 @@ new Vue({
         var categoriesMap = this.relationshipadvisor.categories;
         if(categoriesMap){
           var value = categoriesMap[Object.keys(categoriesMap)[0]];
-          return value.map;
+          return value.optionToNameMap;
         }
         /*
         var values = [];
@@ -165,6 +166,8 @@ new Vue({
         if(!this.question){
           return;
         }
+
+        var questionText = this.question;
         
         var questionCategories = new Object();
         while(this.question.length > 0) {
@@ -223,6 +226,8 @@ new Vue({
         if(!found) {
           this.answer = "No answer found!";
         }
+
+        this.question = questionText;
       },
       // TODO:: alternative to: this.$forceUpdate(); - this.$nextTick(() => {})
       prepareSelectList(){
@@ -246,10 +251,10 @@ new Vue({
             //this.$set(this.categoriesList[category.categoryName], 'selectedOption', category.optionList[0]);
             this.$set(this.categoriesList[category.categoryName], 'selectedOption', null);
             this.$set(this.categoriesList[category.categoryName], 'optionMap', Object.create(null));
-            for(var idx in category.optionList){
+            for(var optionIdx in category.optionList){
               //category.optionList[idx] = { optionName:category.optionList[idx], isAvailable:true };
               //this.$set(this.categoriesList[category.categoryName].optionList, idx, { optionName:category.optionList[idx], isAvailable:true });
-              this.$set(this.categoriesList[category.categoryName].optionMap, category.optionList[idx], { optionName:category.optionList[idx], isAvailable:true });
+              this.$set(this.categoriesList[category.categoryName].optionMap, category.optionList[optionIdx], { optionName:category.optionList[optionIdx], isAvailable:true });
             }
           }
         }
@@ -267,7 +272,20 @@ new Vue({
           }
         }
       },
+      questionText(){
+        this.question = "";
+        for(var categoryIdx in this.categoriesList){
+          var category = this.categoriesList[categoryIdx];
+          if(category.isAvailable && category.selectedOption != null){
+            if(this.question != ""){
+              this.question += " ";
+            }
+            this.question += category.selectedOption;
+          }
+        }
+      },
       // TODO:: fix includes() bug - string "fe-male" includes "male"
+      // TODO:: all actions (button clicks, etc...) must clear the router parameter
       updateSelectList(){
         // new list of answers - include answers that contain selected categories and seleceted category values
         var remainingAnswerList = [];
@@ -275,8 +293,8 @@ new Vue({
           var answer = this.relationshipadvisor.answer[answerIdx];
           // answer remains if it contains all selected categories and also contains the selected option in the category
           var include = true;
-          for(var idx in this.categoriesList){
-            var category = this.categoriesList[idx];
+          for(var categoryIdx in this.categoriesList){
+            var category = this.categoriesList[categoryIdx];
             if(category.selectedOption != null){
               if(!answer.categoryNameList.includes(category.categoryName)){
                 include = false;
@@ -294,8 +312,8 @@ new Vue({
         }
         if(remainingAnswerList.length == 1){
           this.answer = remainingAnswerList[0].answer;
-          // TODO:: write all selected options to form the question
-          this.question = "";
+          // write all selected options to form the question
+          this.questionText();
           //return;
         }
         this.resetAvailable();
@@ -303,8 +321,8 @@ new Vue({
         // set "available:true" to category if any of its values has "available:true"
         for(var remainingAnswerIdx in remainingAnswerList){
           var remainingAnswer = remainingAnswerList[remainingAnswerIdx];
-          for(var categoryIdx in remainingAnswer.categoryNameList){
-            var categoryName = remainingAnswer.categoryNameList[categoryIdx];
+          for(var categoryNameIdx in remainingAnswer.categoryNameList){
+            var categoryName = remainingAnswer.categoryNameList[categoryNameIdx];
             //this.categoriesList[categoryIdx].isAvailable = true;
             this.categoriesList[categoryName].isAvailable = true;
 
